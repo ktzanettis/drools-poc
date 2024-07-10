@@ -3,16 +3,16 @@ global gr.spring.drools.poc.model.PayzyMember member;
 
 dialect "mvel"
 
-rule "Checking number of physical cards"
+rule "Checking number of virtual cards" salience -1
  when
-  PayzyMember(physicalCardNumber >= 1 || virtualCardNumber >= 2)
+  PayzyMember(virtualCardNumber > 2)
  then
-  member.setEligibleForOffer(true);
+  member.setEligibleForOffer(false);
 end
 
-rule "Checking number of virtual cards"
+rule "Checking number of physical cards" salience 9
  when
-  PayzyMember(virtualCardNumber >= 8)
+  PayzyMember(physicalCardNumber >= 1 || virtualCardNumber > 2)
  then
   member.setEligibleForOffer(true);
 end
