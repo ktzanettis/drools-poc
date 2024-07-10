@@ -1,0 +1,25 @@
+import gr.spring.drools.poc.model.PayzyMember;
+global gr.spring.drools.poc.model.PayzyMember member;
+
+dialect "mvel"
+
+rule "Checking number of physical cards"
+ when
+  PayzyMember(physicalCardNumber >= 1 || virtualCardNumber >= 2)
+ then
+  member.setEligibleForOffer(true);
+end
+
+rule "Checking number of virtual cards"
+ when
+  PayzyMember(virtualCardNumber >= 8)
+ then
+  member.setEligibleForOffer(true);
+end
+
+rule "Checking number of total cards"
+ when
+  PayzyMember(physicalCardNumber + virtualCardNumber >= 6)
+ then
+  member.setEligibleForOffer(true);
+end

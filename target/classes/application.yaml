@@ -1,0 +1,13 @@
+spring:
+   application:
+      name: drools-poc
+server:
+   port: 8080
+   servlet:
+      context-path: /drools-poc
+management:
+   server:
+      port: 8090
+      base-path: /
+logging.level:
+  gr.spring.drools.poc: DEBUG
