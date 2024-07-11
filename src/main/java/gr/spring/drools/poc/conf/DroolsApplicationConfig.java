@@ -41,4 +41,5 @@ public class DroolsApplicationConfig {
         log.info("KIE session created...");
         return getKieContainer().newKieSession();
     }
+
 }

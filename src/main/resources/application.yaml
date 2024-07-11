@@ -1,6 +1,14 @@
 spring:
    application:
       name: drools-poc
+   data:
+      mongodb:
+         host: localhost
+         port: 27017
+         username: root
+         password: cognity2023
+         database: drools-poc
+         authentication-database: admin
 server:
    port: 8080
    servlet:

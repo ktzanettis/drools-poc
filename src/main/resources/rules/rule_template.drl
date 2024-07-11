@@ -1,0 +1,30 @@
+template header
+    name
+    priority
+    activationGroup
+    agendaGroup
+    dateStart
+    dateEnd
+    status
+    expression
+    eligible
+
+package gr.spring.drools.poc;
+
+template "@{name}"
+
+import gr.spring.drools.poc.model.PayzyMember;
+
+rule "@{name}_@{row.rowNumber}"
+ salience @{priority}
+ activation-group "@{activationGroup}"
+ agenda-group "@{agendaGroup}"
+ date-effective "@{dateStart}"
+ date-expires "@{dateEnd}"
+ when
+  $gpu : PayzyMember(@{expression})
+ then
+  $gpu.setEligibleForOffer(@{eligible});
+end
+
+end template
