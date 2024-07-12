@@ -5,6 +5,7 @@ import gr.spring.drools.poc.model.Participant;
 import gr.spring.drools.poc.model.PayzyMember;
 import gr.spring.drools.poc.model.Rate;
 import gr.spring.drools.poc.model.db.Rule;
+import gr.spring.drools.poc.model.rules.MissionEvaluation;
 import lombok.extern.slf4j.Slf4j;
 import org.drools.template.ObjectDataCompiler;
 import org.kie.api.io.ResourceType;
@@ -25,6 +26,8 @@ public class SampleService {
 
     private KieSession kieSession;
     private RuleService ruleService;
+
+    private static int REQUIRED_VALID_ACTIVATION_GROUP_RULES = 2;
 
     public SampleService(KieSession kieSession, RuleService ruleService) {
         this.kieSession = kieSession;
@@ -49,21 +52,27 @@ public class SampleService {
         return member;
     }
 
-    public PayzyMember applyDbRulesInFact(PayzyMember member) {
+    public MissionEvaluation applyDbRulesInFact(MissionEvaluation member) {
 
         List<Rule> ruleList = ruleService.getRulesByStatus(Rule.Status.ACTIVE);
         String compiledRules = getCompiledRules(ruleList);
         log.info("Compiled rules: {}", compiledRules);
         KieSession session = createSession(compiledRules);
 
+        // Add an event listener that logs the fired rules
         RuleExecutionListener listener = new RuleExecutionListener();
         session.addEventListener(listener);
 
         //session.setGlobal("member", member);
         session.insert(member);
-        int rulesMathced = session.fireAllRules();
-        log.info("Number of matching rules: {}", rulesMathced);
-        log.info("Member is eligible for offer... {}", member.isEligibleForOffer());
+        int rulesMatched = session.fireAllRules();
+        log.info("Number of matching rules: {}", rulesMatched);
+        log.info("Number of rules validated... {}", member.getNumOfValidatedRules());
+        boolean userValid = false;
+        if (rulesMatched >= REQUIRED_VALID_ACTIVATION_GROUP_RULES) {
+            userValid = true;
+        }
+        log.info("User validity is {}", userValid);
         session.dispose();
         return member;
     }

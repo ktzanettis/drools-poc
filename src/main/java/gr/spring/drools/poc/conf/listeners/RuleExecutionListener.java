@@ -8,6 +8,10 @@ import org.kie.api.event.rule.MatchCreatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupActivatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 @Slf4j
 public class RuleExecutionListener implements AgendaEventListener {
 

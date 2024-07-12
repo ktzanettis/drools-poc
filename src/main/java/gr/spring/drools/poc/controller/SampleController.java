@@ -3,6 +3,7 @@ package gr.spring.drools.poc.controller;
 import gr.spring.drools.poc.model.Participant;
 import gr.spring.drools.poc.model.PayzyMember;
 import gr.spring.drools.poc.model.Rate;
+import gr.spring.drools.poc.model.rules.MissionEvaluation;
 import gr.spring.drools.poc.service.SampleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +35,8 @@ public class SampleController {
     }
 
     @PostMapping ("/applyDbRulesInFact")
-    public ResponseEntity<PayzyMember> applyDbRulesInFact(@RequestBody PayzyMember member) {
-        PayzyMember memberOutcome = droolsService.applyDbRulesInFact(member);
+    public ResponseEntity<MissionEvaluation> applyDbRulesInFact(@RequestBody MissionEvaluation member) {
+        MissionEvaluation memberOutcome = droolsService.applyDbRulesInFact(member);
         return new ResponseEntity<>(memberOutcome, HttpStatus.OK);
     }
 

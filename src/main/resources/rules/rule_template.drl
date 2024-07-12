@@ -13,7 +13,7 @@ package gr.spring.drools.poc;
 
 template "@{name}"
 
-import gr.spring.drools.poc.model.PayzyMember;
+import gr.spring.drools.poc.model.rules.MissionEvaluation;
 
 rule "@{name}_@{row.rowNumber}"
  salience @{priority}
@@ -22,9 +22,9 @@ rule "@{name}_@{row.rowNumber}"
  date-effective "@{dateStart}"
  date-expires "@{dateEnd}"
  when
-  $gpu : PayzyMember(@{expression})
+  $gpu : MissionEvaluation(@{expression})
  then
-  $gpu.setEligibleForOffer(@{eligible});
+  $gpu.setNumOfValidatedRules($gpu.getNumOfValidatedRules() + 1);
 end
 
 end template

@@ -20,7 +20,7 @@ public class Rule {
     private boolean eligible;
 
     public enum Status {
-        ACTIVE, NON_ACTIVE
+        ACTIVE, ΙΝACTIVE
     }
 
 }
