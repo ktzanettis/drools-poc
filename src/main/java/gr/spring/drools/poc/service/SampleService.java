@@ -1,5 +1,6 @@
 package gr.spring.drools.poc.service;
 
+import gr.spring.drools.poc.conf.listeners.RuleExecutionListener;
 import gr.spring.drools.poc.model.Participant;
 import gr.spring.drools.poc.model.PayzyMember;
 import gr.spring.drools.poc.model.Rate;
@@ -54,6 +55,9 @@ public class SampleService {
         String compiledRules = getCompiledRules(ruleList);
         log.info("Compiled rules: {}", compiledRules);
         KieSession session = createSession(compiledRules);
+
+        RuleExecutionListener listener = new RuleExecutionListener();
+        session.addEventListener(listener);
 
         //session.setGlobal("member", member);
         session.insert(member);
